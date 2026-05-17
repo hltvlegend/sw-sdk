@@ -191,6 +191,11 @@ public:
         l_ = l;
     }
 
+    void bind(sw_state* l, luaapi api) {
+        l_ = l;
+        api_ = api;
+    }
+
 
     sw_tvalue* top() const {
         return l_ ? l_->top : nullptr;
@@ -448,6 +453,7 @@ public:
     ) const {
         return calllib("matrix", name, args, out, nres);
     }
+
     template <class fn>
     bool each(cbctx& ctx, sw_tvalue* tv, fn cb) const {
         if (!ist(tv))

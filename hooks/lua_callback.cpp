@@ -124,14 +124,13 @@ namespace lua_callback {
         const char* cbname = name ? (const char*)*name : nullptr;
         auto* cargs = (cbargs*)args;
 
-        cbctx ctx(script, L, cbname, cargs, g_lua_api);
-
         if (args == last_args) {
             return g_hooks.get("lua_callback")->inl.fastcall<char>(script, name, args);
         }
 
-
         last_args = args;
+
+        cbctx ctx(script, L, cbname, cargs, g_lua_api);
 
         bool pass = g_cb.fire(ctx, false);
 

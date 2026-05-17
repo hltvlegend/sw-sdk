@@ -11,8 +11,6 @@
 namespace main {
     static bool registered = false;
 
-    
-
 
     bool onCustomCommand(cbctx& ctx) {
         /*
@@ -64,8 +62,12 @@ namespace main {
 
                    ctx.lua.server("getTimeMillisec", {}, out, 1);
 
+                   int64_t ms{};
+                   if (!lua::toi(&out.v[0], ms))
+                       return;
+
                    char buf[128];
-                   sprintf_s(buf, 128, "%d", out.v[0].v);
+                   sprintf_s(buf, 128, "%lld", static_cast<long long>(ms));
                    ctx.lua.server("announce", {luaarg::str("time millisec"), luaarg::str(buf)}, out, 0);
 
                });
