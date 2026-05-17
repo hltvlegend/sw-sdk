@@ -11,11 +11,10 @@ This is useful when addon Lua is too limited for communication, persistence, deb
 Stormworks normally runs addon code through Lua callbacks:
 
 ```lua
-function onTick(game_ticks)
-end
+function onTick(game_ticks) end
 
-function onCustomCommand(full_message, peer_id, is_admin, is_auth, command)
-end
+
+function onCustomCommand(full_message, peer_id, is_admin, is_auth, command, ...) end
 ```
 
 This SDK hooks into that flow and exposes the same callback events to C++:
