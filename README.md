@@ -273,11 +273,4 @@ Loading or injecting the DLL into Stormworks is not handled by this repository.
 
 This SDK relies on Stormworks internals. It can break after game updates because function signatures, Lua structures, or offsets may change.
 
-Current wrapper focus:
-
-- `server.*`
-- `matrix.*`
-- callback argument reading
-- Lua table value reading
-
 The project is unofficial and not affiliated with Stormworks: Build and Rescue or its developers.
