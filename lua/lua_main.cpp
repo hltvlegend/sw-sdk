@@ -15,7 +15,9 @@ namespace main {
 
 
     bool onCustomCommand(cbctx& ctx) {
-
+        /*
+         * to fetch arguments we must know its index and type
+         */
 
 
         const char* full = ctx.str(0);
@@ -27,6 +29,12 @@ namespace main {
 
         if (strcmp(cmd, "?test1") == 0) {
             luares out{};
+
+            /*
+             * if we somehow mess up arguments within a call
+             * it will crash our process
+             */
+
 
             ctx.lua.server("announce", { luaarg::str("api test"), luaarg::str("start")}, out, 0);
             ctx.lua.server("notify", {luaarg::num(-1), luaarg::str("notify"), luaarg::str("notify"), luaarg::num(8)}, out, 1);
