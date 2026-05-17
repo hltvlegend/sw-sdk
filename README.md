@@ -32,7 +32,7 @@ A C++ handler receives a `cbctx&`. From that context you can:
 - block the original Lua callback if needed;
 - run logic before or after the Lua callback.
 
-## Why Use This Instead Of Only Addon Lua
+## Why use this instead of only addon lua
 
 Stormworks addon Lua is convenient, but it is still sandboxed Lua. Native C++ gives more control.
 
