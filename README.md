@@ -1,4 +1,4 @@
-# C++ SDK for Stormworks: Build and Rescue Addon Lua
+# C++ SDK for Stormworks addon lua
 
 Experimental C++ SDK for running native code together with the Stormworks addon Lua environment.
 
