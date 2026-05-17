@@ -6,7 +6,7 @@ The main idea is to keep Stormworks addon callbacks as the entry point, but hand
 
 This is useful when addon Lua is too limited for communication, persistence, debugging, or performance-sensitive logic.
 
-## Core Idea
+## Core idea
 
 Stormworks normally runs addon code through Lua callbacks:
 
@@ -48,7 +48,7 @@ Main advantages:
 
 Native code does not make every Stormworks API call free. Calls to `server.*` and `matrix.*` still go through the game's Lua API. The performance benefit comes from moving your own logic out of Lua.
 
-## Basic Usage
+## Basic usage
 
 Register handlers in `main::init`:
 
@@ -138,7 +138,7 @@ ctx.lua.server("spawnExplosion", {
 }, out, 0);
 ```
 
-## Important Types
+## Important types
 
 ### `cbctx`
 
