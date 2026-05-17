@@ -273,3 +273,5 @@ Loading or injecting the DLL into Stormworks is not handled by this repository.
 This SDK relies on Stormworks internals. It can break after game updates because function signatures, Lua structures, or offsets may change.
 
 The project is unofficial and not affiliated with Stormworks: Build and Rescue or its developers.
+
+For function documentation refer to [Cuh4's addon documentation](https://github.com/Cuh4/StormworksAddonLuaDocumentation/tree/main)
