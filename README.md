@@ -2,7 +2,7 @@
 
 Experimental C++ SDK for running native code together with the Stormworks addon Lua environment.
 
-The main idea is to keep Stormworks addon callbacks as the entry point, but handle the heavy or inconvenient logic in C++. The SDK gets access to the active addon Lua state, receives callback data, and lets C++ code call Stormworks API functions such as `server.*` and `matrix.*`.
+The main idea is to make a fully working API bridge, that is capable of doing every task that lua could.
 
 This is useful when addon Lua is too limited for communication, persistence, debugging, or performance-sensitive logic.
 
