@@ -41,7 +41,6 @@ Main advantages:
 - easier integration with external tools and local services;
 - better performance for heavy calculations and large data processing;
 - stronger typing and better project structure than large Lua scripts;
-- easier debugging through native debuggers and `OutputDebugStringA`;
 - direct access to Stormworks `server` and `matrix` API calls from C++;
 - ability to keep Lua as a thin game-side layer while moving complex systems into native code.
 
