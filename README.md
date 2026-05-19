@@ -269,6 +269,8 @@ Loading or injecting the DLL into Stormworks is not handled by this repository.
 
 ## Limitations
 
+This SDK works by stealing lua state from lua_load function, this makes this SDK useless without even 1-line lua addon. This limitation is made up, I have a way to create an independent lua state. This was done to make cheat's developer life harder (as this code provides a base and patterns to hook into the game's functions).
+
 This SDK relies on Stormworks internals. It can break after game updates because function signatures, Lua structures, or offsets may change.
 
 The project is unofficial and not affiliated with Stormworks: Build and Rescue or its developers.
