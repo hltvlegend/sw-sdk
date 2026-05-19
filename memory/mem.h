@@ -8,17 +8,11 @@
 #include <Windows.h>
 #include <Psapi.h>
 #include <vector>
-#include <string>
 #include <cstdint>
 
 
 namespace memory {
-    template <class T>
-    [[nodiscard]] T at(uintptr_t addr, std::ptrdiff_t off) {
-        return *reinterpret_cast<const T*>(
-            addr + off
-        );
-    }
+
 
     inline std::optional<uintptr_t> FindPattern(const char* pattern)
     {

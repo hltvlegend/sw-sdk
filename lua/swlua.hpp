@@ -334,7 +334,7 @@ public:
         }
     }
 
-    bool callv(sw_tvalue* func, const luaarg* args, int argc, luares& out, int nres = 1) const {
+    bool callv(sw_tvalue* func, const luaarg* args, int argc, luares* out, int nres = 1) const {
         if (!l_ || !func || argc < 0 || nres < 0 || nres > 16)
             return false;
 
@@ -357,9 +357,12 @@ public:
             return false;
         }
 
-        out.n = nres;
-        for (int i = 0; i < nres; ++i)
-            out.v[i] = base[i];
+
+        if (out) {
+            out->n = nres;
+            for (int i = 0; i < nres; ++i)
+                out->v[i] = base[i];
+        }
 
         l_->top = base;
         return true;
@@ -406,7 +409,7 @@ public:
         return true;
     }
 
-    bool callg(const char* name, const luaarg* args, int argc, luares& out, int nres = 1) const {
+    bool callg(const char* name, const luaarg* args, int argc, luares* out, int nres = 1) const {
         sw_tvalue* base = l_->top;
         sw_tvalue* f = nullptr;
 
@@ -422,7 +425,7 @@ public:
         const char* lib,
         const char* name,
         std::initializer_list<luaarg> args,
-        luares& out,
+        luares* out,
         int nres = 1
     ) const {
         sw_tvalue* base = l_->top;
@@ -433,25 +436,28 @@ public:
             return false;
         }
 
+
+
         return callv(f, args.begin(), (int)args.size(), out, nres);
     }
 
     bool server(
         const char* name,
         std::initializer_list<luaarg> args,
-        luares& out,
+        luares* out,
         int nres = 1
     ) const {
-        return calllib("server", name, args, out, nres);
+
+        return calllib("server", name, args, out, (nres > 0 ? nres : 1));
     }
 
     bool matrix(
         const char* name,
         std::initializer_list<luaarg> args,
-        luares& out,
+        luares* out,
         int nres = 1
     ) const {
-        return calllib("matrix", name, args, out, nres);
+        return calllib("matrix", name, args, out, (nres > 0 ? nres : 1)); // (nres > 0 ? nres : 1) is only for cleaning the stack after the call
     }
 
     template <class fn>

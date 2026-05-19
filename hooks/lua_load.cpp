@@ -16,9 +16,11 @@ namespace lua_load {
 
 
         g_lua.bind(L, g_lua_api);
-
+        print("lua_load call\n");
         luares out{};
-        if (g_lua.server("getPlayers", {}, out, 1) && out.n > 0) {
+   
+
+        if (g_lua.server("getPlayers", {}, &out, 1)) {
             print("captured new valid state -> %p \n", L);
             main::init(L);
             state = L;

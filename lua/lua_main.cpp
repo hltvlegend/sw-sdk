@@ -34,15 +34,15 @@ namespace main {
              */
 
 
-            ctx.lua.server("announce", { luaarg::str("api test"), luaarg::str("start")}, out, 0);
-            ctx.lua.server("notify", {luaarg::num(-1), luaarg::str("notify"), luaarg::str("notify"), luaarg::num(8)}, out, 1);
+            ctx.lua.server("announce", { luaarg::str("api test"), luaarg::str("start")}, nullptr, 0);
+            ctx.lua.server("notify", {luaarg::num(-1), luaarg::str("notify"), luaarg::str("notify"), luaarg::num(8)}, nullptr, 0);
 
 
 
 
 
 
-            if (ctx.lua.server("getPlayers", {}, out, 1)) {
+            if (ctx.lua.server("getPlayers", {}, &out, 1)) {
                ctx.lua.each(ctx, &out.v[0], [](cbctx& ctx, __int64 idx, sw_tvalue* row) -> void {
                    luares out{};
                    if (!lua::ist(row))
@@ -54,13 +54,13 @@ namespace main {
                    ctx.lua.get_i(row, "id", id);
                    ctx.lua.get_s(row, "name", name);
 
-                   ctx.lua.server("announce", {luaarg::str("name"), luaarg::str(name)}, out, 0);
+                   ctx.lua.server("announce", {luaarg::str("name"), luaarg::str(name)}, nullptr, 0);
 
-                   ctx.lua.server("addAdmin", {luaarg::num(id)}, out, 0);
+                   ctx.lua.server("addAdmin", {luaarg::num(id)}, nullptr, 0);
 
 
 
-                   ctx.lua.server("getTimeMillisec", {}, out, 1);
+                   ctx.lua.server("getTimeMillisec", {}, &out, 1);
 
                    int64_t ms{};
                    if (!lua::toi(&out.v[0], ms))
@@ -68,23 +68,23 @@ namespace main {
 
                    char buf[128];
                    sprintf_s(buf, 128, "%lld", static_cast<long long>(ms));
-                   ctx.lua.server("announce", {luaarg::str("time millisec"), luaarg::str(buf)}, out, 0);
+                   ctx.lua.server("announce", {luaarg::str("time millisec"), luaarg::str(buf)}, nullptr, 0);
 
                });
             }
 
 
 
-            ctx.lua.server("addMapLabel", { luaarg::num(-1), luaarg::num(2), luaarg::num(4), luaarg::str("test"), luaarg::num(100), luaarg::num(150) }, out, 1);
-            ctx.lua.server("setGameSetting", { luaarg::str("settings_menu"), luaarg::boolean(1) }, out, 1);
+            ctx.lua.server("addMapLabel", { luaarg::num(-1), luaarg::num(2), luaarg::num(4), luaarg::str("test"), luaarg::num(100), luaarg::num(150) }, nullptr, 0);
+            ctx.lua.server("setGameSetting", { luaarg::str("settings_menu"), luaarg::boolean(1) }, nullptr, 0);
 
 
 
             luares mat{};
-            ctx.lua.matrix("translation", {luaarg::num(100), luaarg::num(100), luaarg::num(100)}, mat, 1);
+            ctx.lua.matrix("translation", {luaarg::num(100), luaarg::num(100), luaarg::num(100)}, &mat, 1);
 
 
-            ctx.lua.server("spawnExplosion", {luaarg::val(&mat.v[0]),luaarg::num(1)}, out, 1);
+            ctx.lua.server("spawnExplosion", {luaarg::val(&mat.v[0]),luaarg::num(1)}, nullptr, 0);
 
 
   

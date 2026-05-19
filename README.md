@@ -72,11 +72,11 @@ bool onCustomCommand(cbctx& ctx) {
     if (strcmp(cmd, "?test") != 0)
         return true;
 
-    luares out{};
+ 
     ctx.lua.server("announce", {
         luaarg::str("SDK"),
         luaarg::str("Hello from C++")
-    }, out, 0);
+    }, nullptr, 0);
 
     return false;
 }
@@ -190,7 +190,7 @@ Example:
 ```cpp
 luares out{};
 
-if (ctx.lua.server("getPlayers", {}, out, 1)) {
+if (ctx.lua.server("getPlayers", {}, &out, 1)) {
     sw_tvalue* players = &out.v[0];
 }
 ```
@@ -234,7 +234,7 @@ Some Stormworks functions return Lua tables, for example `server.getPlayers`.
 ```cpp
 luares out{};
 
-if (ctx.lua.server("getPlayers", {}, out, 1)) {
+if (ctx.lua.server("getPlayers", {}, &out, 1)) {
     ctx.lua.each(ctx, &out.v[0], [](cbctx& ctx, int64_t index, sw_tvalue* row) {
         int64_t id{};
         const char* name{};
