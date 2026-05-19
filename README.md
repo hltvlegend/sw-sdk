@@ -1,21 +1,20 @@
-# C++ SDK for Stormworks: Build and Rescue Addon Lua
+# C++ SDK for Stormworks addon lua
 
 Experimental C++ SDK for running native code together with the Stormworks addon Lua environment.
 
-The main idea is to keep Stormworks addon callbacks as the entry point, but handle the heavy or inconvenient logic in C++. The SDK gets access to the active addon Lua state, receives callback data, and lets C++ code call Stormworks API functions such as `server.*` and `matrix.*`.
+The main idea is to make a fully working API bridge, that is capable of doing every task that lua could.
 
 This is useful when addon Lua is too limited for communication, persistence, debugging, or performance-sensitive logic.
 
-## Core Idea
+## Core idea
 
 Stormworks normally runs addon code through Lua callbacks:
 
 ```lua
-function onTick(game_ticks)
-end
+function onTick(game_ticks) end
 
-function onCustomCommand(full_message, peer_id, is_admin, is_auth, command)
-end
+
+function onCustomCommand(full_message, peer_id, is_admin, is_auth, command, ...) end
 ```
 
 This SDK hooks into that flow and exposes the same callback events to C++:
@@ -42,13 +41,12 @@ Main advantages:
 - easier integration with external tools and local services;
 - better performance for heavy calculations and large data processing;
 - stronger typing and better project structure than large Lua scripts;
-- easier debugging through native debuggers and `OutputDebugStringA`;
 - direct access to Stormworks `server` and `matrix` API calls from C++;
 - ability to keep Lua as a thin game-side layer while moving complex systems into native code.
 
 Native code does not make every Stormworks API call free. Calls to `server.*` and `matrix.*` still go through the game's Lua API. The performance benefit comes from moving your own logic out of Lua.
 
-## Basic Usage
+## Basic usage
 
 Register handlers in `main::init`:
 
@@ -138,7 +136,7 @@ ctx.lua.server("spawnExplosion", {
 }, out, 0);
 ```
 
-## Important Types
+## Important types
 
 ### `cbctx`
 
@@ -271,6 +269,10 @@ Loading or injecting the DLL into Stormworks is not handled by this repository.
 
 ## Limitations
 
+This SDK works by stealing lua state from lua_load function, this makes this SDK useless without even 1-line lua addon. This limitation is made up, I have a way to create an independent lua state. This was done to make cheat's developer life harder (as this code provides a base and patterns to hook into the game's functions).
+
 This SDK relies on Stormworks internals. It can break after game updates because function signatures, Lua structures, or offsets may change.
 
 The project is unofficial and not affiliated with Stormworks: Build and Rescue or its developers.
+
+For function documentation refer to [Cuh4's addon documentation](https://github.com/Cuh4/StormworksAddonLuaDocumentation/tree/main)
