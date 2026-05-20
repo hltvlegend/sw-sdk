@@ -70,11 +70,11 @@ bool onCustomCommand(cbctx& ctx) {
     if (strcmp(cmd, "?test") != 0)
         return true;
 
-    luares out{};
+    
     ctx.lua.server("announce", {
         luaarg::str("SDK"),
         luaarg::str("Hello from C++")
-    }, out, 0);
+    }, nullptr, 0);
 
     return false;
 }
@@ -96,14 +96,14 @@ g_cb.after("onTick", afterTick);
 Use `ctx.lua.server(...)` for `server.*` functions:
 
 ```cpp
-luares out{};
+
 
 ctx.lua.server("notify", {
     luaarg::num(-1),
     luaarg::str("Title"),
     luaarg::str("Message"),
     luaarg::num(8)
-}, out, 1);
+}, nullptr, 0);
 ```
 
 Use `ctx.lua.matrix(...)` for `matrix.*` functions:
@@ -115,7 +115,7 @@ ctx.lua.matrix("translation", {
     luaarg::num(100),
     luaarg::num(50),
     luaarg::num(200)
-}, mat, 1);
+}, &mat, 1);
 ```
 
 You can pass returned Lua values back into another call:
@@ -128,12 +128,12 @@ ctx.lua.matrix("translation", {
     luaarg::num(100),
     luaarg::num(50),
     luaarg::num(200)
-}, mat, 1);
+}, &mat, 1);
 
 ctx.lua.server("spawnExplosion", {
     luaarg::val(&mat.v[0]),
     luaarg::num(1)
-}, out, 0);
+}, nullptr);
 ```
 
 ## Important types
@@ -232,7 +232,7 @@ Some Stormworks functions return Lua tables, for example `server.getPlayers`.
 ```cpp
 luares out{};
 
-if (ctx.lua.server("getPlayers", {}, out, 1)) {
+if (ctx.lua.server("getPlayers", {}, &out, 1)) {
     ctx.lua.each(ctx, &out.v[0], [](cbctx& ctx, int64_t index, sw_tvalue* row) {
         int64_t id{};
         const char* name{};
